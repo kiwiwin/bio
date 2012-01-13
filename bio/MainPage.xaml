@@ -4,9 +4,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="667" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
     <Grid x:Name="LayoutRoot" Background="White">
-
+        <sdk:DataGrid AutoGenerateColumns="True" Height="228" HorizontalAlignment="Left" Margin="31,25,0,0" Name="dataGridProducts" VerticalAlignment="Top" Width="616" DataContext="{Binding}" ItemsSource="{Binding}" />
+        <Button Content="全部" Height="23" HorizontalAlignment="Left" Margin="31,265,0,0" Name="buttonGetAllProducts" VerticalAlignment="Top" Width="75" Click="buttonGetAllProducts_Click" />
     </Grid>
 </UserControl>
