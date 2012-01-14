@@ -2,10 +2,25 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bio", "bio\bio.csproj", "{AC9CB83E-761E-4567-BEF3-73B3CEFA489D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C8363DFD-8FD0-4329-8746-425B7A173597} = {C8363DFD-8FD0-4329-8746-425B7A173597}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bio.Web", "bio.Web\bio.Web.csproj", "{C8363DFD-8FD0-4329-8746-425B7A173597}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bio.Web.Test", "bio.Web.Test\bio.Web.Test.csproj", "{250BC8E8-3CB0-4401-BCF5-735FB5D9F84A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8D331571-A9BB-4253-A272-E2DFC2BCC278}"
+	ProjectSection(SolutionItems) = preProject
+		bio.vsmdi = bio.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = bio.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -19,6 +34,10 @@ Global
 		{C8363DFD-8FD0-4329-8746-425B7A173597}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8363DFD-8FD0-4329-8746-425B7A173597}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8363DFD-8FD0-4329-8746-425B7A173597}.Release|Any CPU.Build.0 = Release|Any CPU
+		{250BC8E8-3CB0-4401-BCF5-735FB5D9F84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{250BC8E8-3CB0-4401-BCF5-735FB5D9F84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{250BC8E8-3CB0-4401-BCF5-735FB5D9F84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{250BC8E8-3CB0-4401-BCF5-735FB5D9F84A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
