@@ -104,6 +104,9 @@
     <None Include="Service References\ProductService\bio.ProductService.GetAllProductsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ProductService\bio.ProductService.GetProductsByPageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ProductService\ProductService.wsdl" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>

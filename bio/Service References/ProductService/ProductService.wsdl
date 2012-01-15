@@ -25,6 +25,31 @@
           <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="GetProductsByPage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pageIndex" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageSize" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductsByPageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProductsByPageResult" type="tns:ArrayOfProduct" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProductsCount">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetProductsCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetProductsCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetAllProductsSoapIn">
@@ -33,10 +58,30 @@
   <wsdl:message name="GetAllProductsSoapOut">
     <wsdl:part name="parameters" element="tns:GetAllProductsResponse" />
   </wsdl:message>
+  <wsdl:message name="GetProductsByPageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductsByPage" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsByPageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductsByPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsCountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProductsCount" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsCountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProductsCountResponse" />
+  </wsdl:message>
   <wsdl:portType name="ProductServiceSoap">
     <wsdl:operation name="GetAllProducts">
       <wsdl:input message="tns:GetAllProductsSoapIn" />
       <wsdl:output message="tns:GetAllProductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsByPage">
+      <wsdl:input message="tns:GetProductsByPageSoapIn" />
+      <wsdl:output message="tns:GetProductsByPageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsCount">
+      <wsdl:input message="tns:GetProductsCountSoapIn" />
+      <wsdl:output message="tns:GetProductsCountSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ProductServiceSoap" type="tns:ProductServiceSoap">
@@ -50,11 +95,47 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetProductsByPage">
+      <soap:operation soapAction="http://tempuri.org/GetProductsByPage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsCount">
+      <soap:operation soapAction="http://tempuri.org/GetProductsCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ProductServiceSoap12" type="tns:ProductServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetAllProducts">
       <soap12:operation soapAction="http://tempuri.org/GetAllProducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsByPage">
+      <soap12:operation soapAction="http://tempuri.org/GetProductsByPage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductsCount">
+      <soap12:operation soapAction="http://tempuri.org/GetProductsCount" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -6,9 +6,11 @@
     mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Height="536" Width="854">
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <sdk:DataGrid AutoGenerateColumns="True" Height="460" HorizontalAlignment="Left" Margin="31,29,0,0" Name="dataGridProducts" VerticalAlignment="Top" Width="798" DataContext="{Binding}" ItemsSource="{Binding}"></sdk:DataGrid>
-        <Button Content="搜索" Height="23" HorizontalAlignment="Left" Margin="242,495,0,0" Name="buttonSearchProducts" VerticalAlignment="Top" Width="75" Click="buttonSearchProducts_Click" />
-        <sdk:Label Height="28" HorizontalAlignment="Left" Margin="39,495,0,0" Name="labelSearch" VerticalAlignment="Top" Width="59" Content="搜索名称" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="104,495,0,0" Name="textBoxSearchName" VerticalAlignment="Top" Width="120" KeyDown="textBoxSearchName_KeyDown" />
+        <sdk:DataGrid AutoGenerateColumns="True" Height="405" HorizontalAlignment="Left" Margin="21,82,0,0" Name="dataGridProducts" VerticalAlignment="Top" Width="798" DataContext="{Binding}" ItemsSource="{Binding}" RowDetailsVisibilityMode="Visible" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></sdk:DataGrid>
+        <Button Content="搜索" Height="23" HorizontalAlignment="Left" Margin="223,44,0,0" Name="buttonSearchProducts" VerticalAlignment="Top" Width="75" Click="buttonSearchProducts_Click" />
+        <sdk:Label Height="28" HorizontalAlignment="Left" Margin="21,48,0,0" Name="labelSearch" VerticalAlignment="Top" Width="59" Content="搜索名称" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="85,44,0,0" Name="textBoxSearchName" VerticalAlignment="Top" Width="120" KeyDown="textBoxSearchName_KeyDown" />
+        <sdk:DataPager Height="26" HorizontalAlignment="Right" Margin="0,498,396,0" Name="dataPagerProduct" PageSize="15" VerticalAlignment="Top" Width="200" />
+        <sdk:Label Height="28" HorizontalAlignment="Left" Margin="480,504,0,0" Name="labelItemCount" VerticalAlignment="Top" Width="120" Content="共 0 项" />
     </Grid>
 </UserControl>

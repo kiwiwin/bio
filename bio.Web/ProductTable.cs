@@ -18,33 +18,16 @@ namespace bio.Web
             _connectionString = connectionString;
         }
 
-        public String GetProductXmlString(Product product)
-        {
-            return product.GetXmlString();
-        }
-
-        public String GetAllProductsXmlString()
-        {
-            List<Product> productsList = GetAllProducts();
-            XElement products = new XElement("Products");
-            foreach (Product p in productsList)
-            {
-                products.Add(p.GetXmlElement());
-            }
-
-            return products.ToString();
-        }
-
         public Product GetProductById(string productId)
         {
             Product product = new Product();
             try
             {
-                using (DbConnection conn = new OleDbConnection(_connectionString))
+                using (DbConnection dbConnection = new OleDbConnection(_connectionString))
                 {
-                    conn.Open();
-                    
-                    DbCommand command = conn.CreateCommand();
+                    dbConnection.Open();
+
+                    DbCommand command = dbConnection.CreateCommand();
                     command.CommandText = "SELECT * FROM [Sheet1$] WHERE [货号和包装]='" + productId + "'";
 
                     List<Product> productList = GetProductListFromDataReader(command.ExecuteReader());
@@ -62,11 +45,11 @@ namespace bio.Web
         {
             try
             {
-                using (DbConnection conn = new OleDbConnection(_connectionString))
+                using (DbConnection dbConnection = new OleDbConnection(_connectionString))
                 {
-                    conn.Open();
+                    dbConnection.Open();
 
-                    DbCommand command = conn.CreateCommand();
+                    DbCommand command = dbConnection.CreateCommand();
                     command.CommandText = "SELECT * FROM [Sheet1$]";
 
                     var productList = GetProductListFromDataReader(command.ExecuteReader());
@@ -80,6 +63,36 @@ namespace bio.Web
             }
         }
 
+        public List<Product> GetProductsByPage(int pageIndex, int pageSize)
+        {
+            var productList = new List<Product>();
+            try
+            {
+                using (DbConnection dbConnection = new OleDbConnection(_connectionString))
+                {
+                    dbConnection.Open();
+
+                    DbCommand command = dbConnection.CreateCommand();
+                    String target =
+                        " [Sheet1$] WHERE [货号和包装] <> NULL";
+                    command.CommandText = "SELECT TOP " + pageSize + " * FROM " + target;
+                    if ((pageIndex - 1) * pageSize > 0)
+                    {
+                        command.CommandText += " AND [货号和包装] NOT IN (SELECT TOP " + (pageSize * (pageIndex - 1)) + " [货号和包装] FROM " + target +
+                                               " ORDER BY [货号和包装])";
+                    }
+                    command.CommandText += " ORDER BY [货号和包装]";
+
+                    productList = GetProductListFromDataReader(command.ExecuteReader());
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            return productList;
+        }
+
+
         private List<Product> GetProductListFromDataReader(DbDataReader reader)
         {
             var productList = new List<Product>();
@@ -89,11 +102,11 @@ namespace bio.Web
 
                 try
                 {
-                    product.Id = (String)reader["货号和包装"];
-                    product.EnglishName = (String)reader["英文名称"];
-                    product.ChineseName = (String)reader["中文名"];
+                    product.Id = (String)reader["货号和包装"] ?? "";
+                    product.EnglishName = (String)reader["英文名称"] ?? "";
+                    product.ChineseName = (String)reader["中文名"] ?? "";
                     product.Price = reader["2011年人民币价格"].ToString();
-                    if(product.Price.Equals(""))
+                    if (product.Price.Equals(""))
                     {
                         product.Price = "询价";
                     }
@@ -105,6 +118,26 @@ namespace bio.Web
                 productList.Add(product);
             }
             return productList;
+        }
+
+        public int GetProductsCount()
+        {
+            try
+            {
+                using (DbConnection dbConnection = new OleDbConnection(_connectionString))
+                {
+                    dbConnection.Open();
+
+                    DbCommand command = dbConnection.CreateCommand();
+                    command.CommandText = "SELECT COUNT(*) FROM [Sheet1$]";
+
+                    return (int)command.ExecuteScalar();
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
     }
 }

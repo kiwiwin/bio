@@ -22,5 +22,17 @@ namespace bio.Web.Service
         {
             return ProductTable.Instance.GetAllProducts();
         }
+
+        [WebMethod]
+        public List<Product> GetProductsByPage(int pageIndex, int pageSize)
+        {
+            return ProductTable.Instance.GetProductsByPage(pageIndex, pageSize);
+        }
+
+        [WebMethod]
+        public int GetProductsCount()
+        {
+            return ProductTable.Instance.GetProductsCount();
+        }
     }
 }

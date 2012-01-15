@@ -98,6 +98,16 @@ namespace bio.ProductService {
         System.IAsyncResult BeginGetAllProducts(bio.ProductService.GetAllProductsRequest request, System.AsyncCallback callback, object asyncState);
         
         bio.ProductService.GetAllProductsResponse EndGetAllProducts(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetProductsByPage", ReplyAction="*")]
+        System.IAsyncResult BeginGetProductsByPage(bio.ProductService.GetProductsByPageRequest request, System.AsyncCallback callback, object asyncState);
+        
+        bio.ProductService.GetProductsByPageResponse EndGetProductsByPage(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/GetProductsCount", ReplyAction="*")]
+        System.IAsyncResult BeginGetProductsCount(System.AsyncCallback callback, object asyncState);
+        
+        int EndGetProductsCount(System.IAsyncResult result);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -161,6 +171,78 @@ namespace bio.ProductService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetProductsByPageRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetProductsByPage", Namespace="http://tempuri.org/", Order=0)]
+        public bio.ProductService.GetProductsByPageRequestBody Body;
+        
+        public GetProductsByPageRequest() {
+        }
+        
+        public GetProductsByPageRequest(bio.ProductService.GetProductsByPageRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetProductsByPageRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int pageIndex;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public int pageSize;
+        
+        public GetProductsByPageRequestBody() {
+        }
+        
+        public GetProductsByPageRequestBody(int pageIndex, int pageSize) {
+            this.pageIndex = pageIndex;
+            this.pageSize = pageSize;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetProductsByPageResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetProductsByPageResponse", Namespace="http://tempuri.org/", Order=0)]
+        public bio.ProductService.GetProductsByPageResponseBody Body;
+        
+        public GetProductsByPageResponse() {
+        }
+        
+        public GetProductsByPageResponse(bio.ProductService.GetProductsByPageResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class GetProductsByPageResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public System.Collections.ObjectModel.ObservableCollection<bio.ProductService.Product> GetProductsByPageResult;
+        
+        public GetProductsByPageResponseBody() {
+        }
+        
+        public GetProductsByPageResponseBody(System.Collections.ObjectModel.ObservableCollection<bio.ProductService.Product> GetProductsByPageResult) {
+            this.GetProductsByPageResult = GetProductsByPageResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ProductServiceSoapChannel : bio.ProductService.ProductServiceSoap, System.ServiceModel.IClientChannel {
     }
@@ -186,6 +268,44 @@ namespace bio.ProductService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetProductsByPageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetProductsByPageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<bio.ProductService.Product> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<bio.ProductService.Product>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetProductsCountCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetProductsCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ProductServiceSoapClient : System.ServiceModel.ClientBase<bio.ProductService.ProductServiceSoap>, bio.ProductService.ProductServiceSoap {
         
         private BeginOperationDelegate onBeginGetAllProductsDelegate;
@@ -193,6 +313,18 @@ namespace bio.ProductService {
         private EndOperationDelegate onEndGetAllProductsDelegate;
         
         private System.Threading.SendOrPostCallback onGetAllProductsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetProductsByPageDelegate;
+        
+        private EndOperationDelegate onEndGetProductsByPageDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetProductsByPageCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetProductsCountDelegate;
+        
+        private EndOperationDelegate onEndGetProductsCountDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetProductsCountCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -248,6 +380,10 @@ namespace bio.ProductService {
         }
         
         public event System.EventHandler<GetAllProductsCompletedEventArgs> GetAllProductsCompleted;
+        
+        public event System.EventHandler<GetProductsByPageCompletedEventArgs> GetProductsByPageCompleted;
+        
+        public event System.EventHandler<GetProductsCountCompletedEventArgs> GetProductsCountCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -308,6 +444,113 @@ namespace bio.ProductService {
                 this.onGetAllProductsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAllProductsCompleted);
             }
             base.InvokeAsync(this.onBeginGetAllProductsDelegate, null, this.onEndGetAllProductsDelegate, this.onGetAllProductsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult bio.ProductService.ProductServiceSoap.BeginGetProductsByPage(bio.ProductService.GetProductsByPageRequest request, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetProductsByPage(request, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.IAsyncResult BeginGetProductsByPage(int pageIndex, int pageSize, System.AsyncCallback callback, object asyncState) {
+            bio.ProductService.GetProductsByPageRequest inValue = new bio.ProductService.GetProductsByPageRequest();
+            inValue.Body = new bio.ProductService.GetProductsByPageRequestBody();
+            inValue.Body.pageIndex = pageIndex;
+            inValue.Body.pageSize = pageSize;
+            return ((bio.ProductService.ProductServiceSoap)(this)).BeginGetProductsByPage(inValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bio.ProductService.GetProductsByPageResponse bio.ProductService.ProductServiceSoap.EndGetProductsByPage(System.IAsyncResult result) {
+            return base.Channel.EndGetProductsByPage(result);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        private System.Collections.ObjectModel.ObservableCollection<bio.ProductService.Product> EndGetProductsByPage(System.IAsyncResult result) {
+            bio.ProductService.GetProductsByPageResponse retVal = ((bio.ProductService.ProductServiceSoap)(this)).EndGetProductsByPage(result);
+            return retVal.Body.GetProductsByPageResult;
+        }
+        
+        private System.IAsyncResult OnBeginGetProductsByPage(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int pageIndex = ((int)(inValues[0]));
+            int pageSize = ((int)(inValues[1]));
+            return this.BeginGetProductsByPage(pageIndex, pageSize, callback, asyncState);
+        }
+        
+        private object[] OnEndGetProductsByPage(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<bio.ProductService.Product> retVal = this.EndGetProductsByPage(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetProductsByPageCompleted(object state) {
+            if ((this.GetProductsByPageCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetProductsByPageCompleted(this, new GetProductsByPageCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetProductsByPageAsync(int pageIndex, int pageSize) {
+            this.GetProductsByPageAsync(pageIndex, pageSize, null);
+        }
+        
+        public void GetProductsByPageAsync(int pageIndex, int pageSize, object userState) {
+            if ((this.onBeginGetProductsByPageDelegate == null)) {
+                this.onBeginGetProductsByPageDelegate = new BeginOperationDelegate(this.OnBeginGetProductsByPage);
+            }
+            if ((this.onEndGetProductsByPageDelegate == null)) {
+                this.onEndGetProductsByPageDelegate = new EndOperationDelegate(this.OnEndGetProductsByPage);
+            }
+            if ((this.onGetProductsByPageCompletedDelegate == null)) {
+                this.onGetProductsByPageCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetProductsByPageCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetProductsByPageDelegate, new object[] {
+                        pageIndex,
+                        pageSize}, this.onEndGetProductsByPageDelegate, this.onGetProductsByPageCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult bio.ProductService.ProductServiceSoap.BeginGetProductsCount(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetProductsCount(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        int bio.ProductService.ProductServiceSoap.EndGetProductsCount(System.IAsyncResult result) {
+            return base.Channel.EndGetProductsCount(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetProductsCount(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((bio.ProductService.ProductServiceSoap)(this)).BeginGetProductsCount(callback, asyncState);
+        }
+        
+        private object[] OnEndGetProductsCount(System.IAsyncResult result) {
+            int retVal = ((bio.ProductService.ProductServiceSoap)(this)).EndGetProductsCount(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetProductsCountCompleted(object state) {
+            if ((this.GetProductsCountCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetProductsCountCompleted(this, new GetProductsCountCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetProductsCountAsync() {
+            this.GetProductsCountAsync(null);
+        }
+        
+        public void GetProductsCountAsync(object userState) {
+            if ((this.onBeginGetProductsCountDelegate == null)) {
+                this.onBeginGetProductsCountDelegate = new BeginOperationDelegate(this.OnBeginGetProductsCount);
+            }
+            if ((this.onEndGetProductsCountDelegate == null)) {
+                this.onEndGetProductsCountDelegate = new EndOperationDelegate(this.OnEndGetProductsCount);
+            }
+            if ((this.onGetProductsCountCompletedDelegate == null)) {
+                this.onGetProductsCountCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetProductsCountCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetProductsCountDelegate, null, this.onEndGetProductsCountDelegate, this.onGetProductsCountCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -396,6 +639,31 @@ namespace bio.ProductService {
             public bio.ProductService.GetAllProductsResponse EndGetAllProducts(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bio.ProductService.GetAllProductsResponse _result = ((bio.ProductService.GetAllProductsResponse)(base.EndInvoke("GetAllProducts", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetProductsByPage(bio.ProductService.GetProductsByPageRequest request, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = request;
+                System.IAsyncResult _result = base.BeginInvoke("GetProductsByPage", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bio.ProductService.GetProductsByPageResponse EndGetProductsByPage(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bio.ProductService.GetProductsByPageResponse _result = ((bio.ProductService.GetProductsByPageResponse)(base.EndInvoke("GetProductsByPage", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetProductsCount(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetProductsCount", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public int EndGetProductsCount(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                int _result = ((int)(base.EndInvoke("GetProductsCount", _args, result)));
                 return _result;
             }
         }

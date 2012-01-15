@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,7 +19,7 @@ namespace bio
 {
     public partial class MainPage : UserControl
     {
-        private List<Product> _products = new List<Product>();
+        private List<Product> _allProducts = new List<Product>();
 
         public MainPage()
         {
@@ -29,58 +30,65 @@ namespace bio
             client.GetAllProductsAsync();
         }
 
-
         private void GetAllProductsCompleted(object sender, GetAllProductsCompletedEventArgs e)
         {
-            try
+            foreach (var product in e.Result)
             {
-                foreach (Product product in e.Result)
-                {
-                    if (product.ChineseName != null && product.EnglishName != null && product.Price != null)
-                    _products.Add(product);
-                }
-                dataGridProducts.ItemsSource = e.Result;
-                dataGridProducts.IsReadOnly = true;
+                if (product.ChineseName != null && product.EnglishName != null
+                    && product.Id != null && product.Price != null)
+                    _allProducts.Add(product);
             }
-            catch (Exception)
-            {
-            }
+
+            UpdateProductsView(_allProducts);
+        }
+
+        private void UpdateProductsView(List<Product> products)
+        {
+            PagedCollectionView productPaged = new PagedCollectionView(products);
+
+            dataGridProducts.ItemsSource = productPaged;
+            dataPagerProduct.Source = productPaged;
+
+            labelItemCount.Content = "共 " + products.Count + " 项";
         }
 
         private void buttonSearchProducts_Click(object sender, RoutedEventArgs e)
         {
-            SearchByName();
-        }
-
-        private void SearchByName()
-        {
-            try
-            {
-                List<Product> result = new List<Product>();
-                foreach (Product product in _products)
-                {
-                    if (product.ChineseName.Contains(textBoxSearchName.Text) ||
-                        product.EnglishName.Contains(textBoxSearchName.Text))
-                    {
-                        result.Add(product);
-                    }
-                }
-                dataGridProducts.IsReadOnly = false;
-                dataGridProducts.ItemsSource = result;
-                dataGridProducts.IsReadOnly = true;
-            }
-            catch (Exception ex)
-            {
-            }
+            SearchByName(textBoxSearchName.Text);
         }
 
         private void textBoxSearchName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                SearchByName();
+                SearchByName(textBoxSearchName.Text);
             }
         }
 
+        private int CompareProductId(Product lhs, Product rhs)
+        {
+            return lhs.Id.CompareTo(rhs.Id);
+        }
+
+        private void SearchByName(String name)
+        {
+            List<Product> products = new List<Product>();
+            foreach (var product in _allProducts)
+            {
+                if (product.ChineseName == null || product.EnglishName == null) continue;
+                if (product.ChineseName.Contains(name) ||
+                    product.EnglishName.Contains(name))
+                {
+                    products.Add(product);
+                }
+            }
+
+            //products.Sort(CompareProductId);
+
+            UpdateProductsView(products);
+            //PagedCollectionView pagedCollectionView = new PagedCollectionView(products);
+            //dataGridProducts.ItemsSource = pagedCollectionView;
+            //dataPagerProduct.Source = pagedCollectionView;
+        }
     }
 }

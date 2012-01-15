@@ -34,42 +34,21 @@ namespace bio.Web.Test
         }
 
         [TestMethod]
-        public void TestGetProductXmlString()
+        public void TestGetProductsByPage()
         {
-            String xmlString = "<Product>\r\n  <Id>0101-100KG</Id>\r\n  <EnglishName>CITRIC ACID, TRISODIUM SALT, DIHYDRATE</EnglishName>\r\n  <ChineseName>柠檬酸三钠,二水</ChineseName>\r\n  <Price>13500</Price>\r\n</Product>";
-            Product product = ProductTable.Instance.GetProductById("0101-100KG");
-            Assert.AreEqual(xmlString, ProductTable.Instance.GetProductXmlString(product));
+            List<Product> products = ProductTable.Instance.GetProductsByPage(1, 3);
+            Assert.IsNotNull(products);
+            Assert.AreEqual(3, products.Count);
+            List<Product> products2 = ProductTable.Instance.GetProductsByPage(2, 3);
+            Assert.IsNotNull(products);
+            Assert.AreEqual(1, products2.Count);
         }
 
+
         [TestMethod]
-        public void TestGetProductListXmlString()
+        public void TestGetProductsCount()
         {
-            XElement productsXml = new XElement("Products",
-                new XElement("Product",
-                    new XElement("Id", "0101-100KG"),
-                    new XElement("EnglishName", "CITRIC ACID, TRISODIUM SALT, DIHYDRATE"),
-                    new XElement("ChineseName", "柠檬酸三钠,二水"),
-                    new XElement("Price", "13500")),
-                new XElement("Product",
-                    new XElement("Id", "0101-50KG"),
-                    new XElement("EnglishName", "CITRIC ACID, TRISODIUM SALT, DIHYDRATE"),
-                    new XElement("ChineseName", "柠檬酸三钠,二水"),
-                    new XElement("Price", "9497")),
-                new XElement("Product",
-                    new XElement("Id", "0101-12KG"),
-                    new XElement("EnglishName", "CITRIC ACID, TRISODIUM SALT, DIHYDRATE"),
-                    new XElement("ChineseName", "柠檬酸三钠,二水"),
-                    new XElement("Price", "3404")),
-                new XElement("Product",
-                    new XElement("Id", "0101-1KG"),
-                    new XElement("EnglishName", "CITRIC ACID, TRISODIUM SALT, DIHYDRATE"),
-                    new XElement("ChineseName", "柠檬酸三钠,二水"),
-                    new XElement("Price", "询价"))
-                    );
-            
-            List<Product> products = ProductTable.Instance.GetAllProducts();
-            String resultString = ProductTable.Instance.GetAllProductsXmlString();
-            Assert.AreEqual(productsXml.ToString(), resultString);
+            Assert.AreEqual(4, ProductTable.Instance.GetProductsCount());
         }
     }
 }
